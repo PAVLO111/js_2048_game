@@ -22,7 +22,14 @@ class Game {
    */
   constructor(initialState) {
     // eslint-disable-next-line no-console
-    console.log(initialState);
+    // console.log(initialState);
+
+    this.board = initialState || [
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ];
   }
 
   moveLeft() {}
@@ -38,7 +45,9 @@ class Game {
   /**
    * @returns {number[][]}
    */
-  getState() {}
+  getState() {
+    return this.board;
+  }
 
   /**
    * Returns the current game status.
@@ -66,4 +75,3 @@ class Game {
 }
 
 module.exports = Game;
- 
