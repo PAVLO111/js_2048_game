@@ -24,12 +24,15 @@ class Game {
     // eslint-disable-next-line no-console
     // console.log(initialState);
 
-    this.board = initialState || [
+    this.field = initialState || [
       [0, 0, 0, 0],
       [0, 0, 0, 0],
       [0, 0, 0, 0],
       [0, 0, 0, 0],
     ];
+
+    this.score = 0;
+    this.status = 'idle';
   }
 
   moveLeft() {}
@@ -40,13 +43,15 @@ class Game {
   /**
    * @returns {number}
    */
-  getScore() {}
+  getScore() {
+    return this.score;
+  }
 
   /**
    * @returns {number[][]}
    */
   getState() {
-    return this.board;
+    return this.field;
   }
 
   /**
@@ -59,17 +64,25 @@ class Game {
    * `win` - the game is won;
    * `lose` - the game is lost
    */
-  getStatus() {}
+  getStatus() {
+    return this.status;
+  }
 
   /**
    * Starts the game.
    */
-  start() {}
+  start() {
+    this.status = 'playing';
+    this.field = initialState;
+  }
 
   /**
    * Resets the game.
    */
-  restart() {}
+  restart() {
+    this.status = 'playing';
+    this.field = initialState;
+  }
 
   // Add your own methods here
 }

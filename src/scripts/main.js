@@ -40,7 +40,7 @@ function draw() {
         if (value > 0) {
           cell.textContent = value; // Записуємо число (наприклад, 2)
           // Додаємо клас для CSS стилів плитки
-          cell.className = `field-cell tile-${value}`;
+          cell.className = `field-cell cell-${value}`;
         } else {
           cell.textContent = ''; // Якщо нуль — очищуємо клітинку
 
