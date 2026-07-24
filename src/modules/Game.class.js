@@ -24,12 +24,14 @@ class Game {
     // eslint-disable-next-line no-console
     // console.log(initialState);
 
-    this.field = initialState || [
+    this.startField = [
       [0, 0, 0, 0],
       [0, 0, 0, 0],
       [0, 0, 0, 0],
       [0, 0, 0, 0],
     ];
+
+    this.field = initialState || this.startField;
 
     this.score = 0;
     this.status = 'idle';
@@ -73,18 +75,32 @@ class Game {
    */
   start() {
     this.status = 'playing';
-    this.field = initialState;
+
+    this.addRandomTile();
   }
 
   /**
    * Resets the game.
    */
   restart() {
-    this.status = 'playing';
-    this.field = initialState;
+    this.status = 'idle';
+    this.score = 0;
+    this.field = this.startField;
   }
 
-  // Add your own methods here
+  // --- Add your own methods here ---
+
+  addRandomTile() {
+    for (let y = 0; y < this.field.length; y++) {
+      for (let x = 0; x < this.field[y].length; x++) {
+        const value = this.field[y][x];
+
+        if (value === 0) {
+          // console.log(y, x);
+        }
+      }
+    }
+  }
 }
 
 module.exports = Game;
