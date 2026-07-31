@@ -1,5 +1,7 @@
 'use strict';
 
+// console.log('Hello World!');
+
 /**
  * This class represents the game.
  * Now it has a basic structure, that is needed for testing.
@@ -23,6 +25,8 @@ class Game {
   constructor(initialState) {
     // eslint-disable-next-line no-console
     // console.log(initialState);
+
+    // console.log('Hello World!');
 
     this.startField = [
       [0, 0, 0, 0],
@@ -76,7 +80,7 @@ class Game {
   start() {
     this.status = 'playing';
 
-    this.addRandomTile();
+    this.addRandomNumber();
   }
 
   /**
@@ -90,16 +94,21 @@ class Game {
 
   // --- Add your own methods here ---
 
-  addRandomTile() {
+  addRandomNumber() {
+    const arr = [];
+
     for (let y = 0; y < this.field.length; y++) {
       for (let x = 0; x < this.field[y].length; x++) {
-        const value = this.field[y][x];
-
-        if (value === 0) {
-          // console.log(y, x);
+        if (this.field[y][x] === 0) {
+          arr.push({y, x});
         }
       }
     }
+
+    const random = Math.floor(Math.random() * arr.length);
+    const findCell = arr[random];
+
+    this.field[findCell.y][findCell.x] = Math.random() < 0.1 ? 4 : 2;
   }
 }
 
