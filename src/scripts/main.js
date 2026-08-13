@@ -8,6 +8,9 @@ const game = new Game();
 game.addRandomNumber();
 // console.log(game.getState());
 
+// game.moveLeft();
+// console.log(game.getState());
+
 // ====================================================================
 function showBoard() {
   const board = game.getState();
@@ -18,23 +21,31 @@ function showBoard() {
     for (let x = 0; x < board[y].length; x++) {
       const value = board[y][x];
       const index = y * 4 + x;
-      const cellIndex = allTails[index];
+      const cell = allTails[index];
 
       // -1-
-      // if (value !== 0) {
-      //   cellIndex.textContent = value;
-      //   cellIndex.className = 'field-cell field-cell--${value}';
-      // } else {
-      //   cellIndex.textContent = '';
-      //   cellIndex.className = 'field-cell';
-      // }
+      if (value !== 0) {
+        cell.textContent = value;
+        cell.className = `field-cell field-cell--${value}`;
+      } else {
+        cell.textContent = '';
+        cell.className = 'field-cell';
+      }
 
       // -2-
-      cellIndex.textContent = value !== 0 ? value : '';
+      // cell.textContent = value !== 0 ? value : '';
     }
   }
 }
 showBoard();
+
+// --ПІДКЛЮЧАЮ стрілки!!!
+document.addEventListener('keydown', ((eventi) => {
+  if (eventi.key === 'ArrowLeft') {
+    game.moveLeft();
+    showBoard();
+  }
+}));
 // ====================================================================
 
 // const currentState = game.getState();
@@ -85,3 +96,12 @@ showBoard();
 
 // // Викликаємо відображення
 // draw();
+
+//            !!!натисни стрілку в консолі!!!
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+// document.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft' }));
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

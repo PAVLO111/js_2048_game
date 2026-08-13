@@ -1,6 +1,6 @@
 'use strict';
 
-// console.log('Hello World!');
+console.log('Hello World!');
 
 /**
  * This class represents the game.
@@ -41,7 +41,7 @@ class Game {
     this.status = 'idle';
   }
 
-  moveLeft() {}
+  // moveLeft() {}
   moveRight() {}
   moveUp() {}
   moveDown() {}
@@ -109,6 +109,38 @@ class Game {
     const findCell = arr[random];
 
     this.field[findCell.y][findCell.x] = Math.random() < 0.1 ? 4 : 2;
+  }
+
+  slideRow(row) {
+    const numbers = row.filter((num) => num !== 0);
+    const difLength = 4 - numbers.length;
+    const newArr = Array(difLength).fill(0);
+    const newRow = [...numbers, ...newArr];
+
+    for (let i = 0; i < newRow.length; i++) {
+      if (newRow[i] === newRow[i + 1]) {
+        this.score += newRow[i] + newRow[i + 1];
+        newRow[i] = newRow[i] + newRow[i + 1];
+        newRow[i + 1] = 0;
+      }
+    }
+
+    return newRow;
+  }
+
+  moveLeft() {
+    // this.copyPreviousField = this.field;
+    this.copyPreviousField = JSON.parse(JSON.stringify(this.field));
+    this.field = this.field.map((arr) => this.slideRow(arr));
+
+    if (this.field !== this.copyPreviousField) {
+      // console.log(copyPreviousField);
+      // this.score += this.addScore;
+
+      this.addRandomNumber();
+      // this.checkWin();
+      // this.checkGameOver();
+    }
   }
 }
 
