@@ -45,7 +45,13 @@ document.addEventListener('keydown', ((eventi) => {
     game.moveLeft();
     showBoard();
   }
+
+  if (eventi.key === 'ArrowRight') {
+    game.moveRight();
+    showBoard();
+  }
 }));
+
 // ====================================================================
 
 // const currentState = game.getState();

@@ -42,7 +42,7 @@ class Game {
   }
 
   // moveLeft() {}
-  moveRight() {}
+  // moveRight() {}
   moveUp() {}
   moveDown() {}
 
@@ -129,17 +129,31 @@ class Game {
   }
 
   moveLeft() {
-    // this.copyPreviousField = this.field;
+    // КОПІЮВАННЯ масиву
     this.copyPreviousField = JSON.parse(JSON.stringify(this.field));
     this.field = this.field.map((arr) => this.slideRow(arr));
 
     if (this.field !== this.copyPreviousField) {
-      // console.log(copyPreviousField);
-      // this.score += this.addScore;
-
       this.addRandomNumber();
-      // this.checkWin();
-      // this.checkGameOver();
+      // this.checkWin();       //???
+      // this.checkGameOver();  //???
+    }
+  }
+
+  moveRight() {
+    // КОПІЮВАННЯ масиву
+    this.copyPreviousField = JSON.parse(JSON.stringify(this.field));
+    // console.log(this.copyPreviousField);
+
+    this.field = this.field.map((arr) => {
+      const reverseArr = arr.reverse();
+      const slided = this.slideRow(reverseArr);
+
+      return slided.reverse();
+    });
+
+    if (this.field !== this.copyPreviousField) {
+      this.addRandomNumber();
     }
   }
 }
