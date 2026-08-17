@@ -111,6 +111,25 @@ class Game {
     this.field[findCell.y][findCell.x] = Math.random() < 0.1 ? 4 : 2;
   }
 
+  // -1-
+  // slideRow(row) {
+  //   const numbers = row.filter((num) => num !== 0);
+  //   const difLength = 4 - numbers.length;
+  //   const newArr = Array(difLength).fill(0);
+  //   const newRow = [...numbers, ...newArr];
+
+  //   for (let i = 0; i < newRow.length; i++) {
+  //     if (newRow[i] === newRow[i + 1]) {
+  //       this.score += newRow[i] + newRow[i + 1];
+  //       newRow[i] = newRow[i] + newRow[i + 1];
+  //       newRow[i + 1] = 0;
+  //     }
+  //   }
+
+  //   return newRow;
+  // }
+
+  // -2-
   slideRow(row) {
     const numbers = row.filter((num) => num !== 0);
     const difLength = 4 - numbers.length;
@@ -125,8 +144,15 @@ class Game {
       }
     }
 
-    return newRow;
+    const currentRow = newRow.filter((num) => num !== 0);
+    const diffLength = 4 - currentRow.length;
+    const finishArr = Array(diffLength).fill(0);
+    const finishRow = [...currentRow, ...finishArr];
+
+    return finishRow;
   }
+
+  // game.slideRow([2, 0, 2, 4])
 
   moveLeft() {
     // КОПІЮВАННЯ масиву
