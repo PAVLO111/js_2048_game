@@ -43,8 +43,8 @@ class Game {
 
   // moveLeft() {}
   // moveRight() {}
-  moveUp() {}
-  moveDown() {}
+  // moveUp() {}
+  // moveDown() {}
 
   /**
    * @returns {number}
@@ -152,6 +152,44 @@ class Game {
     return finishRow;
   }
 
+  transpose(field) {
+    const newField = [];
+
+    for (let x = 0; x < field.length; x++) {
+      const newRow = [];
+
+      for (let y = 0; y < field.length; y++) {
+        newRow.push(field[y][x]);
+      }
+
+      newField.push(newRow);
+    }
+
+    return newField;
+  }
+
+  // slideRowVertical(row) {
+  //   const numbers = row.filter((num) => num !== 0);
+  //   const difLength = 4 - numbers.length;
+  //   const newArr = Array(difLength).fill(0);
+  //   const newRow = [...numbers, ...newArr];
+
+  //   for (let i = 0; i < newRow.length; i++) {
+  //     if (newRow[i] === newRow[i + 5]) {
+  //       this.score += newRow[i] + newRow[i + 5];
+  //       newRow[i] = newRow[i] + newRow[i + 5];
+  //       newRow[i + 5] = 0;
+  //     }
+  //   }
+
+  //   const currentRow = newRow.filter((num) => num !== 0);
+  //   const diffLength = 4 - currentRow.length;
+  //   const finishArr = Array(diffLength).fill(0);
+  //   const finishRow = [...currentRow, ...finishArr];
+
+  //   return finishRow;
+  // }
+
   // game.slideRow([2, 0, 2, 4])
 
   moveLeft() {
@@ -164,6 +202,44 @@ class Game {
       // this.checkWin();       //???
       // this.checkGameOver();  //???
     }
+  }
+
+  moveUp() {
+    // КОПІЮВАННЯ масиву
+    this.copyPreviousField = JSON.parse(JSON.stringify(this.field));
+    this.transposeField = this.transpose(this.field);
+    this.currentField = this.transposeField.map((arr) => this.slideRow(arr));
+    this.field = this.transpose(this.currentField);
+
+    if (this.field !== this.copyPreviousField) {
+      this.addRandomNumber();
+      // this.checkWin();       //???
+      // this.checkGameOver();  //???
+    }
+
+    // this.field = this.field.map((arr) => this.slideRow(arr));
+  }
+
+  moveDown() {
+    // КОПІЮВАННЯ масиву
+    this.copyPreviousField = JSON.parse(JSON.stringify(this.field));
+    this.transposeField = this.transpose(this.field);
+
+    this.currentField = this.transposeField.map((arr) => {
+      const reverseArr = arr.reverse();
+      const slided = this.slideRow(reverseArr);
+
+      return slided.reverse();
+    });
+    this.field = this.transpose(this.currentField);
+
+    if (this.field !== this.copyPreviousField) {
+      this.addRandomNumber();
+      // this.checkWin();       //???
+      // this.checkGameOver();  //???
+    }
+
+    // this.field = this.field.map((arr) => this.slideRow(arr));
   }
 
   moveRight() {
@@ -183,5 +259,7 @@ class Game {
     }
   }
 }
+
+
 
 module.exports = Game;

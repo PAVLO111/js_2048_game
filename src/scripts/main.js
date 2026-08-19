@@ -48,6 +48,16 @@ document.addEventListener('keydown', ((eventi) => {
     game.moveRight();
     showBoard();
   }
+
+  if (eventi.key === 'ArrowUp') {
+    game.moveUp();
+    showBoard();
+  }
+
+  if (eventi.key === 'ArrowDown') {
+    game.moveDown();
+    showBoard();
+  }
 }));
 
 // ====================================================================
