@@ -5,11 +5,24 @@ const Game = require('../modules/Game.class');
 const game = new Game();
 
 // ====================================================================
-window.game = game;    // GPT  /  test slideRow
+// window.game = game;    // GPT  /  test slideRow / enter into console
 // ====================================================================
-game.addRandomNumber();   // Claude
+// game.addRandomNumber();   // Claude  /  test randomNumber
 
 // ====================================================================
+
+const button = document.querySelector('button');
+const startInfo = document.querySelector('.message-start');
+
+const score = document.querySelector('.info');
+
+button.addEventListener('click', (eventi) => {
+  // info.style.visibility = 'hidden';
+  startInfo.classList.add('hidden');
+  game.start();
+  showBoard();
+});
+
 function showBoard() {
   const board = game.getState();
 
@@ -34,6 +47,8 @@ function showBoard() {
       // cell.textContent = value !== 0 ? value : '';
     }
   }
+
+  score.textContent = game.getScore();
 }
 showBoard();
 

@@ -1,6 +1,7 @@
 'use strict';
 
 console.log('Hello World!');
+// =========================
 
 /**
  * This class represents the game.
@@ -81,6 +82,7 @@ class Game {
     this.status = 'playing';
 
     this.addRandomNumber();
+    this.addRandomNumber();
   }
 
   /**
@@ -111,25 +113,6 @@ class Game {
     this.field[findCell.y][findCell.x] = Math.random() < 0.1 ? 4 : 2;
   }
 
-  // -1-
-  // slideRow(row) {
-  //   const numbers = row.filter((num) => num !== 0);
-  //   const difLength = 4 - numbers.length;
-  //   const newArr = Array(difLength).fill(0);
-  //   const newRow = [...numbers, ...newArr];
-
-  //   for (let i = 0; i < newRow.length; i++) {
-  //     if (newRow[i] === newRow[i + 1]) {
-  //       this.score += newRow[i] + newRow[i + 1];
-  //       newRow[i] = newRow[i] + newRow[i + 1];
-  //       newRow[i + 1] = 0;
-  //     }
-  //   }
-
-  //   return newRow;
-  // }
-
-  // -2-
   slideRow(row) {
     const numbers = row.filter((num) => num !== 0);
     const difLength = 4 - numbers.length;
@@ -168,39 +151,15 @@ class Game {
     return newField;
   }
 
-  // slideRowVertical(row) {
-  //   const numbers = row.filter((num) => num !== 0);
-  //   const difLength = 4 - numbers.length;
-  //   const newArr = Array(difLength).fill(0);
-  //   const newRow = [...numbers, ...newArr];
-
-  //   for (let i = 0; i < newRow.length; i++) {
-  //     if (newRow[i] === newRow[i + 5]) {
-  //       this.score += newRow[i] + newRow[i + 5];
-  //       newRow[i] = newRow[i] + newRow[i + 5];
-  //       newRow[i + 5] = 0;
-  //     }
-  //   }
-
-  //   const currentRow = newRow.filter((num) => num !== 0);
-  //   const diffLength = 4 - currentRow.length;
-  //   const finishArr = Array(diffLength).fill(0);
-  //   const finishRow = [...currentRow, ...finishArr];
-
-  //   return finishRow;
-  // }
-
-  // game.slideRow([2, 0, 2, 4])
-
   moveLeft() {
     // КОПІЮВАННЯ масиву
     this.copyPreviousField = JSON.parse(JSON.stringify(this.field));
     this.field = this.field.map((arr) => this.slideRow(arr));
 
-    if (this.field !== this.copyPreviousField) {
+    if (JSON.stringify(this.field) !== JSON.stringify(this.copyPreviousField)) {
       this.addRandomNumber();
-      // this.checkWin();       //???
-      // this.checkGameOver();  //???
+      this.checkWin();
+      this.checkGameOver();
     }
   }
 
@@ -211,13 +170,11 @@ class Game {
     this.currentField = this.transposeField.map((arr) => this.slideRow(arr));
     this.field = this.transpose(this.currentField);
 
-    if (this.field !== this.copyPreviousField) {
+    if (JSON.stringify(this.field) !== JSON.stringify(this.copyPreviousField)) {
       this.addRandomNumber();
-      // this.checkWin();       //???
-      // this.checkGameOver();  //???
+      this.checkWin();
+      this.checkGameOver();
     }
-
-    // this.field = this.field.map((arr) => this.slideRow(arr));
   }
 
   moveDown() {
@@ -233,19 +190,16 @@ class Game {
     });
     this.field = this.transpose(this.currentField);
 
-    if (this.field !== this.copyPreviousField) {
+    if (JSON.stringify(this.field) !== JSON.stringify(this.copyPreviousField)) {
       this.addRandomNumber();
-      // this.checkWin();       //???
-      // this.checkGameOver();  //???
+      this.checkWin();
+      this.checkGameOver();
     }
-
-    // this.field = this.field.map((arr) => this.slideRow(arr));
   }
 
   moveRight() {
     // КОПІЮВАННЯ масиву
     this.copyPreviousField = JSON.parse(JSON.stringify(this.field));
-    // console.log(this.copyPreviousField);
 
     this.field = this.field.map((arr) => {
       const reverseArr = arr.reverse();
@@ -254,12 +208,65 @@ class Game {
       return slided.reverse();
     });
 
-    if (this.field !== this.copyPreviousField) {
+    if (JSON.stringify(this.field) !== JSON.stringify(this.copyPreviousField)) {
       this.addRandomNumber();
+      this.checkGameOver();
+      this.checkWin();
+    }
+  }
+
+  checkGameOver() {
+    this.arrZero = [];
+    this.same = [];
+
+    for (let y = 0; y < this.field.length; y++) {
+      for (let x = 0; x < this.field[y].length; x++) {
+        if (this.field[y][x] === 0) {
+          this.arrZero.push({y, x});
+        }
+      }
+    }
+
+    this.field.forEach((row) => {
+      for (let i = 0; i < row.length; i++) {
+        if (row[i] === row[i + 1]) {
+          this.same.push(row[i]);
+        }
+      }
+    });
+
+    this.transposeField = this.transpose(this.field);
+
+    this.transposeField.forEach((row) => {
+      for (let i = 0; i < row.length; i++) {
+        if (row[i] === row[i + 1]) {
+          this.same.push(row[i]);
+        }
+      }
+    });
+
+    if (this.arrZero.length === 0 && this.same.length === 0) {
+      this.status = 'lose';
+    }
+  }
+
+  checkWin() {
+    // -1-
+    // for (let y = 0; y < this.field.length; y++) {
+    //   for (let x = 0; x < this.field[y].length; x++) {
+    //     if (this.field[y][x] === 2048) {
+    //       this.status = 'win';
+    //     }
+    //   }
+    // }
+
+    // -2-
+    this.win = this.field.some((row) => row.some((num) => num === 2048));
+
+    if (this.win === true) {
+      this.status = 'win';
     }
   }
 }
-
-
 
 module.exports = Game;
