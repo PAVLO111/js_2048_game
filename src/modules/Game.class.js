@@ -149,7 +149,6 @@ class Game {
   }
 
   moveLeft() {
-    // КОПІЮВАННЯ масиву
     this.copyPreviousField = JSON.parse(JSON.stringify(this.field));
     this.field = this.field.map((arr) => this.slideRow(arr));
 
@@ -161,7 +160,6 @@ class Game {
   }
 
   moveUp() {
-    // КОПІЮВАННЯ масиву
     this.copyPreviousField = JSON.parse(JSON.stringify(this.field));
     this.transposeField = this.transpose(this.field);
     this.currentField = this.transposeField.map((arr) => this.slideRow(arr));
@@ -175,7 +173,6 @@ class Game {
   }
 
   moveDown() {
-    // КОПІЮВАННЯ масиву
     this.copyPreviousField = JSON.parse(JSON.stringify(this.field));
     this.transposeField = this.transpose(this.field);
 
@@ -195,7 +192,6 @@ class Game {
   }
 
   moveRight() {
-    // КОПІЮВАННЯ масиву
     this.copyPreviousField = JSON.parse(JSON.stringify(this.field));
 
     this.field = this.field.map((arr) => {
@@ -248,16 +244,6 @@ class Game {
   }
 
   checkWin() {
-    // -1-
-    // for (let y = 0; y < this.field.length; y++) {
-    //   for (let x = 0; x < this.field[y].length; x++) {
-    //     if (this.field[y][x] === 2048) {
-    //       this.status = 'win';
-    //     }
-    //   }
-    // }
-
-    // -2-
     this.win = this.field.some((row) => row.some((num) => num === 2048));
 
     if (this.win === true) {
