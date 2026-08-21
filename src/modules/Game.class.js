@@ -1,8 +1,5 @@
 'use strict';
 
-console.log('Hello World!');
-// =========================
-
 /**
  * This class represents the game.
  * Now it has a basic structure, that is needed for testing.
@@ -36,7 +33,7 @@ class Game {
       [0, 0, 0, 0],
     ];
 
-    this.field = initialState || this.startField;
+    this.field = initialState || JSON.parse(JSON.stringify(this.startField));
 
     this.score = 0;
     this.status = 'idle';
@@ -91,7 +88,7 @@ class Game {
   restart() {
     this.status = 'idle';
     this.score = 0;
-    this.field = this.startField;
+    this.field = JSON.parse(JSON.stringify(this.startField));
   }
 
   // --- Add your own methods here ---
@@ -102,7 +99,7 @@ class Game {
     for (let y = 0; y < this.field.length; y++) {
       for (let x = 0; x < this.field[y].length; x++) {
         if (this.field[y][x] === 0) {
-          arr.push({y, x});
+          arr.push({ y, x });
         }
       }
     }
@@ -222,7 +219,7 @@ class Game {
     for (let y = 0; y < this.field.length; y++) {
       for (let x = 0; x < this.field[y].length; x++) {
         if (this.field[y][x] === 0) {
-          this.arrZero.push({y, x});
+          this.arrZero.push({ y, x });
         }
       }
     }

@@ -13,13 +13,28 @@ const game = new Game();
 
 const button = document.querySelector('button');
 const startInfo = document.querySelector('.message-start');
-
 const score = document.querySelector('.info');
+const loseInfo = document.querySelector('.message-lose');
+const winInfo = document.querySelector('.message-win');
 
 button.addEventListener('click', (eventi) => {
-  // info.style.visibility = 'hidden';
+  if (game.status === 'idle') {
+    game.start();
+  } else {
+    game.restart();
+    game.start();
+  }
+
+  if (game.status !== 'idle') {
+    button.classList.remove('start');
+    button.textContent = 'Restart';
+    button.classList.add('restart');
+  }
+
   startInfo.classList.add('hidden');
-  game.start();
+  loseInfo.classList.add('hidden');
+  winInfo.classList.add('hidden');
+
   showBoard();
 });
 
@@ -52,28 +67,42 @@ function showBoard() {
 }
 showBoard();
 
+function checkGameStatus() {
+  if (game.status === 'lose') {
+    loseInfo.classList.remove('hidden');
+  }
+
+  if (game.status === 'win') {
+    winInfo.classList.remove('hidden');
+  }
+}
+
 // --ПІДКЛЮЧАЮ стрілки!!!
-document.addEventListener('keydown', ((eventi) => {
+document.addEventListener('keydown', (eventi) => {
   if (eventi.key === 'ArrowLeft') {
     game.moveLeft();
+    checkGameStatus();
     showBoard();
   }
 
   if (eventi.key === 'ArrowRight') {
     game.moveRight();
+    checkGameStatus();
     showBoard();
   }
 
   if (eventi.key === 'ArrowUp') {
     game.moveUp();
+    checkGameStatus();
     showBoard();
   }
 
   if (eventi.key === 'ArrowDown') {
     game.moveDown();
+    checkGameStatus();
     showBoard();
   }
-}));
+});
 
 // ====================================================================
 
