@@ -13,7 +13,7 @@ const game = new Game();
 
 const button = document.querySelector('button');
 const startInfo = document.querySelector('.message-start');
-const score = document.querySelector('.info');
+const score = document.querySelector('.game-score');
 const loseInfo = document.querySelector('.message-lose');
 const winInfo = document.querySelector('.message-win');
 
